@@ -3,37 +3,48 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useRef, useState } from "react";
-// 3. Controlled Component 
-// Render <-> DOM Caching 
-// useState to store values, and DOM events (i.e., onChange) to update state 
-// Hanlders best be at child level for min. re-render, though, state and function may come from parent 
+// 4.Props Composition
 
-// Enforce DOM update into memory update without re-render
-//setState re-renders if not === ; hence, use callback function, allow dependency=[]
+//（Props Composition） pattern, it 2 functions agreeing on key names. 
+// One responsible for sending, and another for recieving.
+// React const: shallow immutable: no reassign or rebind (reference unchange), but values
+//            are mutable.
 
-//Enforcer re-render (but advance)
-// useReducer
-
-//Interactivity- Rather fine chopping DOM for mini-update for better UX.
+//One way Dataflow in JS: Parent-> Child preferred; i.e., Child cannot change parent state, if so 
+// changes setState reference; also JS pass by copy of reference
 function App() {
 
-// user input-> setInput (update state) -> React re-render (hence having new input in value)-> assign to 
-// input value field for displaying
-
-//onXXX => has a set of Attributes (advanced), if not used, omit:
-  // onClick={(e) => setCount(count + 1)}
-  // onClick={() => setCount(count + 1)}
-  // onClick={handleClick}
 function Parent(){
-  const [input, SetInput]=useState("");
-  return(
+
+  const person={
+    name: "eva",
+    ip: "0.0.0",
+    age:"0",
+    
+   }
+
+return(
+  <Child person={person}/>
+  );
+}
+
+function Child({person}){
+
+  return (
     <div>
-      <div> your input: {input}</div>
-      <input value={input}  
-      onChange= {(e) => setInput(e.target.value)} />
+      <p>
+        {person.name}
+      </p>
+      <p>
+        {person.ip}
+      </p>
+          <p>
+        {person.age}
+      </p>
 
     </div>
-  );
+  )
+
 }
   
  return (< Parent/>);
