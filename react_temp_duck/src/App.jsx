@@ -3,46 +3,34 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { useRef, useState } from "react";
-// 4.Props Composition
-
-//（Props Composition） pattern, it 2 functions agreeing on key names. 
-// One responsible for sending, and another for recieving.
-// React const: shallow immutable: no reassign or rebind (reference unchange), but values
-//            are mutable.
-
-//One way Dataflow in JS: Parent-> Child preferred; i.e., Child cannot change parent state, if so 
-// changes setState reference; also JS pass by copy of reference
+//5. callback for onXxx Pattern (i.e., onClick/onAction)
+// Parent passes Action handler to Children, Children "callback" parents when actions triggered,
+// allowing centralized control in parent 
 function App() {
 
 function Parent(){
+  function clickHandler(id){
+      console.log("clicked on item "+ id);
+  }
 
-  const person={
-    name: "eva",
-    ip: "0.0.0",
-    age:"0",
-    
-   }
-
-return(
-  <Child person={person}/>
-  );
+// or <Child id={1} handleClick={() => clickHandler({ id: 1 })} />
+  return(
+    <Child id={0 } handleClick={()=>clickHandler(0)}/>
+    );
 }
 
-function Child({person}){
+function Child({id, handleClick}){
 
   return (
-    <div>
-      <p>
-        {person.name}
-      </p>
-      <p>
-        {person.ip}
-      </p>
-          <p>
-        {person.age}
-      </p>
+    <div> 
+      <button onClick={handleClick}>
+        Press me
+      </button>
+
 
     </div>
+
+
   )
 
 }
